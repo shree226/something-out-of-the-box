@@ -2,3 +2,4 @@ streamlit
 openai-whisper
 jiwer
 soundfile
+streamlit-mic-recorder
