@@ -9,5 +9,4 @@ I have other creative ideas as well, such as giving the end user the opportunity
 
 I would love the opportunity to discuss other ideas as well! Thankyou for your time and consideration.
 
-Instructions to run:
-Open the terminal and write this command: streamlit run app.py
+
