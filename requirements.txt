@@ -3,4 +3,4 @@ openai-whisper
 jiwer
 soundfile
 streamlit-mic-recorder
-torch==1.10.2
+torch==2.6.0
