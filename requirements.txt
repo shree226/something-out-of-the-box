@@ -2,5 +2,9 @@ streamlit
 openai-whisper
 jiwer
 soundfile
+<<<<<<< HEAD
 streamlit-mic-recorder
 torch
+=======
+streamlit-mic-recorder
+>>>>>>> 558cbfc (torch issues works in localhost but had some issues in deployment)

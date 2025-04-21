@@ -1,11 +1,21 @@
+import os
+os.environ["STREAMLIT_WATCHER_TYPE"] = "none"  # Prevent Streamlit file watcher issues with torch
+
 import streamlit as st
 from streamlit_mic_recorder import mic_recorder
 from utils import load_story_data
 from utils.audio_utils import transcribe_audio
 from utils.scoring import compute_pronunciation_score, compute_timing_score
 import pandas as pd
+import whisper
 
 st.set_page_config(page_title="Freadom AI Speech Evaluator", layout="centered")
+
+@st.cache_resource
+def load_model():
+    return whisper.load_model("base")
+
+model = load_model()
 
 story = load_story_data()
 
@@ -36,7 +46,6 @@ if idx >= len(story):
     st.metric("Average Timing", f"{avg_time:.2f}%")
     st.stop()
 
-
 page = story[idx]
 st.image(page["image"], use_container_width=True, width=100)
 col1, col2, col3 = st.columns([1, 2, 1])
@@ -52,9 +61,8 @@ with col2:
         with center_col:
             audio = mic_recorder(start_prompt="Record", stop_prompt="Stop", key=f"rec_{idx}")
 
-
         if audio:
-            transcript, duration = transcribe_audio(audio["bytes"])
+            transcript, duration = transcribe_audio(audio["bytes"], model)
             pron_score = compute_pronunciation_score(transcript, page["expected_transcript"])
             time_score = compute_timing_score(duration, page["expected_duration"])
             st.session_state.results[idx] = {
